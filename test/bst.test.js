@@ -13,14 +13,14 @@ describe('Binary search tree', function () {
     assert.isNull(bst.left);
     assert.isNull(bst.right);
     bst.hasOwnProperty('key').should.equal(false);
-    bst.data.length.should.equal(0);
+    bst.length.should.equal(0);
 
     bst = new BinarySearchTree({ key: 6, value: 'ggg' });
     assert.isNull(bst.left);
     assert.isNull(bst.right);
     bst.key.should.equal(6);
-    bst.data.length.should.equal(1);
-    bst.data[0].should.equal('ggg');
+    bst.length.should.equal(1);
+    bst[0].should.equal('ggg');
   });
 
   describe('Sanity checks', function () {
@@ -208,7 +208,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.key.should.equal(10);
-      _.isEqual(bst.data, ['some data']).should.equal(true);
+      _.isEqual(bst, ['some data']).should.equal(true);
       assert.isNull(bst.left);
       assert.isNull(bst.right);
     });
@@ -222,7 +222,7 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       assert.isNull(bst.right);
       bst.left.key.should.equal(7);
-      _.isEqual(bst.left.data, ['some other data']).should.equal(true);
+      _.isEqual(bst.left, ['some other data']).should.equal(true);
       assert.isNull(bst.left.left);
       assert.isNull(bst.left.right);
     });
@@ -236,7 +236,7 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       assert.isNull(bst.left);
       bst.right.key.should.equal(14);
-      _.isEqual(bst.right.data, ['some other data']).should.equal(true);
+      _.isEqual(bst.right, ['some other data']).should.equal(true);
       assert.isNull(bst.right.left);
       assert.isNull(bst.right.right);
     });
@@ -252,13 +252,13 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       assert.isNull(bst.right);
       bst.left.key.should.equal(7);
-      _.isEqual(bst.left.data, ['some other data']).should.equal(true);
+      _.isEqual(bst.left, ['some other data']).should.equal(true);
 
       bst.left.left.key.should.equal(1);
-      _.isEqual(bst.left.left.data, ['hello']).should.equal(true);
+      _.isEqual(bst.left.left, ['hello']).should.equal(true);
 
       bst.left.right.key.should.equal(9);
-      _.isEqual(bst.left.right.data, ['world']).should.equal(true);
+      _.isEqual(bst.left.right, ['world']).should.equal(true);
     });
 
     it("Recursive insertion on the right works", function () {
@@ -272,13 +272,13 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       assert.isNull(bst.left);
       bst.right.key.should.equal(17);
-      _.isEqual(bst.right.data, ['some other data']).should.equal(true);
+      _.isEqual(bst.right, ['some other data']).should.equal(true);
 
       bst.right.left.key.should.equal(11);
-      _.isEqual(bst.right.left.data, ['hello']).should.equal(true);
+      _.isEqual(bst.right.left, ['hello']).should.equal(true);
 
       bst.right.right.key.should.equal(19);
-      _.isEqual(bst.right.right.data, ['world']).should.equal(true);
+      _.isEqual(bst.right.right, ['world']).should.equal(true);
     });
 
     it('If uniqueness constraint not enforced, we can insert different data for same key', function () {
@@ -290,14 +290,14 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.left.key.should.equal(3);
-      _.isEqual(bst.left.data, ['hello', 'world']).should.equal(true);
+      _.isEqual(bst.left, ['hello', 'world']).should.equal(true);
 
       bst.insert(12, 'a');
       bst.insert(12, 'b');
 
       bst.checkIsBST();
       bst.right.key.should.equal(12);
-      _.isEqual(bst.right.data, ['a', 'b']).should.equal(true);
+      _.isEqual(bst.right, ['a', 'b']).should.equal(true);
     });
 
     it('If uniqueness constraint is enforced, we cannot insert different data for same key', function () {
@@ -314,7 +314,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.left.key.should.equal(3);
-      _.isEqual(bst.left.data, ['hello']).should.equal(true);
+      _.isEqual(bst.left, ['hello']).should.equal(true);
 
       bst.insert(12, 'a');
       try {
@@ -326,7 +326,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.right.key.should.equal(12);
-      _.isEqual(bst.right.data, ['a']).should.equal(true);
+      _.isEqual(bst.right, ['a']).should.equal(true);
     });
 
     it('Can insert 0 or the empty string', function () {
@@ -336,7 +336,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.key.should.equal(0);
-      _.isEqual(bst.data, ['some data']).should.equal(true);
+      _.isEqual(bst, ['some data']).should.equal(true);
       assert.isNull(bst.left);
       assert.isNull(bst.right);
 
@@ -346,7 +346,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
       bst.key.should.equal('');
-      _.isEqual(bst.data, ['some other data']).should.equal(true);
+      _.isEqual(bst, ['some other data']).should.equal(true);
       assert.isNull(bst.left);
       assert.isNull(bst.right);
     });
@@ -391,7 +391,7 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
 
       for (i = 0; i < 100; i += 1) {
-        _.isEqual(bst.search(i), ['some data for ' + i]).should.equal(true);
+        _.isEqual([...bst.search(i)], ['some data for ' + i]).should.equal(true);
       }
     });
 
@@ -406,10 +406,10 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
 
-      bst.search(-2).length.should.equal(0);
-      bst.search(100).length.should.equal(0);
-      bst.search(101).length.should.equal(0);
-      bst.search(63).length.should.equal(0);
+      [...bst.search(-2)].length.should.equal(0);
+      [...bst.search(100)].length.should.equal(0);
+      [...bst.search(101)].length.should.equal(0);
+      [...bst.search(63)].length.should.equal(0);
     });
 
     it('Can find ascending ordered data in a BST', function () {
@@ -425,7 +425,7 @@ describe('Binary search tree', function () {
       var key = bst.getMinKey();
       key.should.equal(0);
       for (i = 1; i <= 100; i += 1) {
-        var next = bst.searchAfter(key);
+        var next = [...bst.searchAfter(key)];
 	if( i == 100 )
           next.should.deep.equal([]);
         else {
@@ -451,7 +451,7 @@ describe('Binary search tree', function () {
       var key = bst.getMaxKey();
       key.should.equal(99);
       for (i = 1; i <= 100; i += 1) {
-        var next = bst.searchBefore(key);
+        var next = [...bst.searchBefore(key)];
 	if( i == 100 )
           next.should.deep.equal([]);
         else {
@@ -472,13 +472,13 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
 
-      var search = bst.searchNearest(6)
+      var search = [...bst.searchNearest(6)]
       assert.deepEqual(search[0], 'data 5')
 
-      search = bst.searchNearest(20)
+      search = [...bst.searchNearest(20)]
       assert.deepEqual(search[0], 'data 18')
 
-      search = bst.searchNearest(-50)
+      search = [...bst.searchNearest(-50)]
       assert.deepEqual(search[0], 'data 3')
     });
 
@@ -490,19 +490,18 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
 
-      var search = bst.searchNearestGte(19)
+      var search = [...bst.searchNearestGte(19)]
       assert.deepEqual(search[0], 'data 100')
 
-      search = bst.searchNearestGte(101)
-      assert.isNull(search)
+      assert.isNull(bst.searchNearestGte(101))
 
-      search = bst.searchNearestGte(7)
+      search = [...bst.searchNearestGte(7)]
       assert.deepEqual(search[0], 'data 8')
 
-      search = bst.searchNearestGte(6)
+      search = [...bst.searchNearestGte(6)]
       assert.deepEqual(search[0], 'data 8')
 
-      search = bst.searchNearestGte(-10)
+      search = [...bst.searchNearestGte(-10)]
       assert.deepEqual(search[0], 'data 3')
     });
 
@@ -514,19 +513,18 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
 
-      var search = bst.searchNearestLte(99)
+      var search = [...bst.searchNearestLte(99)]
       assert.deepEqual(search[0], 'data 18')
 
-      search = bst.searchNearestLte(0)
-      assert.isNull(search)
+      assert.isNull(bst.searchNearestLte(0))
 
-      search = bst.searchNearestLte(7)
+      search = [...bst.searchNearestLte(7)]
       assert.deepEqual(search[0], 'data 5')
 
-      search = bst.searchNearestLte(6)
+      search = [...bst.searchNearestLte(6)]
       assert.deepEqual(search[0], 'data 5')
 
-      search = bst.searchNearestLte(100000)
+      search = [...bst.searchNearestLte(100000)]
       assert.deepEqual(search[0], 'data 100')
     });
 
@@ -538,7 +536,7 @@ describe('Binary search tree', function () {
 
       bst.checkIsBST();
 
-      var search = bst.searchNearestLte(8)
+      var search = [...bst.searchNearestLte(8)]
       assert.deepEqual(search, ['data 8', 'data 8'])
     });
 
@@ -598,8 +596,8 @@ describe('Binary search tree', function () {
       bst.hasOwnProperty('key').should.equal(false);
       bstu.hasOwnProperty('key').should.equal(false);
 
-      bst.data.length.should.equal(0);
-      bstu.data.length.should.equal(0);
+      bst.length.should.equal(0);
+      bstu.length.should.equal(0);
 
       bst.getNumberOfKeys().should.equal(0);
       bstu.getNumberOfKeys().should.equal(0);
@@ -614,7 +612,7 @@ describe('Binary search tree', function () {
 
       function checkBst () {
         [10, 5, 3, 8, 15, 12, 37].forEach(function (k) {
-          _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+          _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
         });
       }
 
@@ -644,12 +642,12 @@ describe('Binary search tree', function () {
 
       bst.insert(10, 'hello');
       bst.key.should.equal(10);
-      _.isEqual(bst.data, ['hello']).should.equal(true);
+      _.isEqual(bst, ['hello']).should.equal(true);
       bst.getNumberOfKeys().should.equal(1);
 
       bst.delete(10);
       bst.hasOwnProperty('key').should.equal(false);
-      bst.data.length.should.equal(0);
+      bst.length.should.equal(0);
       bst.getNumberOfKeys().should.equal(0);
     });
 
@@ -671,9 +669,9 @@ describe('Binary search tree', function () {
       function checkOnlyOneWasRemoved (theRemoved) {
         [10, 5, 3, 8, 15, 12, 37].forEach(function (k) {
           if (k === theRemoved) {
-            bst.search(k).length.should.equal(0);
+            [...bst.search(k)].length.should.equal(0);
           } else {
-            _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+            _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
           }
         });
 
@@ -718,9 +716,9 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(3);
       [5, 3, 6].forEach(function (k) {
-        _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
       });
-      bst.search(10).length.should.equal(0);
+      [...bst.search(10)].length.should.equal(0);
 
       // Root has only one child, on the right
       bst = new BinarySearchTree();
@@ -732,9 +730,9 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(3);
       [15, 13, 16].forEach(function (k) {
-        _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
       });
-      bst.search(10).length.should.equal(0);
+      [...bst.search(10)].length.should.equal(0);
     });
 
     it('Able to delete non root nodes that have only one child', function () {
@@ -753,9 +751,9 @@ describe('Binary search tree', function () {
       function checkOnlyOneWasRemoved (theRemoved) {
         [10, 5, 15, 3, 1, 4, 20, 17, 25].forEach(function (k) {
           if (k === theRemoved) {
-            bst.search(k).length.should.equal(0);
+            [...bst.search(k)].length.should.equal(0);
           } else {
-            _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+            _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
           }
         });
 
@@ -785,9 +783,9 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(6);
       [5, 3, 8, 15, 12, 37].forEach(function (k) {
-        _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
       });
-      bst.search(10).length.should.equal(0);
+      [...bst.search(10)].length.should.equal(0);
     });
 
     it('Can delete a non-root node that has two children', function () {
@@ -802,9 +800,9 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(14);
       [10, 3, 1, 4, 8, 6, 9, 15, 12, 11, 13, 20, 19, 42].forEach(function (k) {
-        _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
       });
-      bst.search(5).length.should.equal(0);
+      [...bst.search(5)].length.should.equal(0);
 
       bst = new BinarySearchTree();
       [10, 5, 3, 1, 4, 8, 6, 9, 15, 12, 11, 13, 20, 19, 42].forEach(function (k) {
@@ -815,9 +813,9 @@ describe('Binary search tree', function () {
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(14);
       [10, 5, 3, 1, 4, 8, 6, 9, 12, 11, 13, 20, 19, 42].forEach(function (k) {
-        _.isEqual(bst.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...bst.search(k)], ['some ' + k]).should.equal(true);
       });
-      bst.search(15).length.should.equal(0);
+      [...bst.search(15)].length.should.equal(0);
     });
 
     it('If no value is provided, it will delete the entire node even if there are multiple pieces of data', function () {
@@ -829,11 +827,11 @@ describe('Binary search tree', function () {
       bst.insert(5, 'world');
       bst.insert(8, 'yes');
 
-      assert.deepEqual(bst.search(5), ['hello', 'world']);
+      assert.deepEqual([...bst.search(5)], ['hello', 'world']);
       bst.getNumberOfKeys().should.equal(4);
 
       bst.delete(5);
-      bst.search(5).length.should.equal(0);
+      [...bst.search(5)].length.should.equal(0);
       bst.getNumberOfKeys().should.equal(3);
     });
 
@@ -846,11 +844,11 @@ describe('Binary search tree', function () {
       bst.insert(5, 'world');
       bst.insert(8, 'yes');
 
-      assert.deepEqual(bst.search(5), ['hello', 'world']);
+      assert.deepEqual([...bst.search(5)], ['hello', 'world']);
       bst.getNumberOfKeys().should.equal(4);
 
       bst.delete(5, 'hello');
-      assert.deepEqual(bst.search(5), ['world']);
+      assert.deepEqual([...bst.search(5)], ['world']);
       bst.getNumberOfKeys().should.equal(4);
     });
 
@@ -863,11 +861,11 @@ describe('Binary search tree', function () {
       bst.insert(5, 'world');
       bst.insert(8, 'yes');
 
-      assert.deepEqual(bst.search(5), ['hello', 'world']);
+      assert.deepEqual([...bst.search(5)], ['hello', 'world']);
       bst.getNumberOfKeys().should.equal(4);
 
       bst.delete(5, 'nope');
-      assert.deepEqual(bst.search(5), ['hello', 'world']);
+      assert.deepEqual([...bst.search(5)], ['hello', 'world']);
       bst.getNumberOfKeys().should.equal(4);
     });
 
@@ -880,11 +878,11 @@ describe('Binary search tree', function () {
       bst.insert(5, 'world');
       bst.insert(8, 'yes3');
 
-      assert.deepEqual(bst.search(3), ['yes2']);
+      assert.deepEqual([...bst.search(3)], ['yes2']);
       bst.getNumberOfKeys().should.equal(4);
 
       bst.delete(3, 'yes2');
-      bst.search(3).length.should.equal(0);
+      [...bst.search(3)].length.should.equal(0);
       bst.getNumberOfKeys().should.equal(3);
     });
 
@@ -899,8 +897,8 @@ describe('Binary search tree', function () {
       bst.delete(10);
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(2);
-      assert.deepEqual(bst.search(5), ['no']);
-      assert.deepEqual(bst.search(15), ['yes']);
+      assert.deepEqual([...bst.search(5)], ['no']);
+      assert.deepEqual([...bst.search(15)], ['yes']);
     });
 
     it('Can remove the root from a tree with height 3 when the root has two children (special case where the two children themselves have children)', function () {
@@ -916,8 +914,8 @@ describe('Binary search tree', function () {
       bst.delete(10);
       bst.checkIsBST();
       bst.getNumberOfKeys().should.equal(4);
-      assert.deepEqual(bst.search(5), ['no']);
-      assert.deepEqual(bst.search(15), ['yes']);
+      assert.deepEqual([...bst.search(5)], ['no']);
+      assert.deepEqual([...bst.search(15)], ['yes']);
     });
 
   });   // ==== End of 'Deletion' ==== //
@@ -939,55 +937,55 @@ describe('Binary search tree', function () {
     bst.insert(2);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(undefined), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(undefined)], []);
 
     bst.insert(undefined, 'hello');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(undefined), ['hello']);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(undefined)], ['hello']);
 
     bst.insert(undefined, 'world');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(undefined), ['hello', 'world']);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(undefined)], ['hello', 'world']);
 
     bst.insert(4);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(undefined), ['hello', 'world']);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(undefined)], ['hello', 'world']);
 
     bst.delete(undefined, 'hello');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(undefined), ['world']);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(undefined)], ['world']);
 
     bst.delete(undefined);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(undefined), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(undefined)], []);
 
     bst.delete(2, undefined);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(undefined), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(undefined)], []);
 
     bst.delete(4);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(0);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(undefined), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(undefined)], []);
   });
 
 
@@ -1007,61 +1005,61 @@ describe('Binary search tree', function () {
     bst.insert(2, null);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(null), []);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(null)], []);
 
     bst.insert(null, 'hello');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(null), ['hello']);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(null)], ['hello']);
 
     bst.insert(null, 'world');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(null), ['hello', 'world']);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(null)], ['hello', 'world']);
 
     bst.insert(4, null);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(4), [null]);
-    assert.deepEqual(bst.search(null), ['hello', 'world']);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(4)], [null]);
+    assert.deepEqual([...bst.search(null)], ['hello', 'world']);
 
     bst.delete(null, 'hello');
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(4), [null]);
-    assert.deepEqual(bst.search(null), ['world']);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(4)], [null]);
+    assert.deepEqual([...bst.search(null)], ['world']);
 
     bst.delete(null);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(bst.search(2), [null]);
-    assert.deepEqual(bst.search(4), [null]);
-    assert.deepEqual(bst.search(null), []);
+    assert.deepEqual([...bst.search(2)], [null]);
+    assert.deepEqual([...bst.search(4)], [null]);
+    assert.deepEqual([...bst.search(null)], []);
 
     bst.delete(2, null);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), [null]);
-    assert.deepEqual(bst.search(null), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], [null]);
+    assert.deepEqual([...bst.search(null)], []);
 
     bst.delete(4);
     bst.checkIsBST();
     bst.getNumberOfKeys().should.equal(0);
-    assert.deepEqual(bst.search(2), []);
-    assert.deepEqual(bst.search(4), []);
-    assert.deepEqual(bst.search(null), []);
+    assert.deepEqual([...bst.search(2)], []);
+    assert.deepEqual([...bst.search(4)], []);
+    assert.deepEqual([...bst.search(null)], []);
   });
 
 
   describe('Execute on every node (=tree traversal)', function () {
 
-    it('Can execute a function on every node', function () {
+    it('Can execute a function on every node (and yield)', function () {
       var bst = new BinarySearchTree()
         , keys = []
         , executed = 0
@@ -1077,9 +1075,18 @@ describe('Binary search tree', function () {
 
       bst.executeOnEveryNode(function (node) {
         keys.push(node.key);
-        executed += 1;
+        executed ++
       });
 
+      assert.deepEqual(keys, [3, 5, 8, 10, 11, 15, 159]);
+      executed.should.equal(7);
+
+      executed = 0
+      keys = []
+      for(const node of bst.yieldOnEveryNode()){
+        keys.push(node.key)
+        executed ++
+      }
       assert.deepEqual(keys, [3, 5, 8, 10, 11, 15, 159]);
       executed.should.equal(7);
     });
@@ -1103,8 +1110,8 @@ describe('Binary search tree', function () {
       // bstDataElems is a simple array containing every piece of data in the tree
       bst.executeOnEveryNode(function (node) {
         var i;
-        for (i = 0; i < node.data.length; i += 1) {
-          bstDataElems.push(node.data[i]);
+        for (i = 0; i < node.length; i += 1) {
+          bstDataElems.push(node[i]);
         }
       });
 
@@ -1114,7 +1121,7 @@ describe('Binary search tree', function () {
 
       // Compare data
       Object.keys(data).forEach(function (key) {
-        checkDataEquality(bst.search(key), data[key]);
+        checkDataEquality([...bst.search(key)], data[key]);
       });
     }
 
@@ -1145,6 +1152,7 @@ describe('Binary search tree', function () {
 
             delete data[key];
             bst.delete(key);
+            checkDataIsTheSame(bst, data);
           } else {   // Insertion
             key = Math.floor(70 * Math.random()).toString();
             dataPiece = Math.random().toString().substring(0, 6);
@@ -1154,6 +1162,7 @@ describe('Binary search tree', function () {
             } else {
               data[key] = [dataPiece];
             }
+            checkDataIsTheSame(bst, data);
           }
 
           // Check the bst constraint are still met and the data is correct

@@ -191,7 +191,7 @@ describe('AVL tree', function () {
 
       avlt.checkIsAVLT();
       avlt.tree.key.should.equal(10);
-      _.isEqual(avlt.tree.data, ['some data']).should.equal(true);
+      _.isEqual(avlt.tree, ['some data']).should.equal(true);
       assert.isNull(avlt.tree.left);
       assert.isNull(avlt.tree.right);
     });
@@ -204,13 +204,13 @@ describe('AVL tree', function () {
       avlt.insert(3, 'world');
 
       avlt.checkIsAVLT();
-      _.isEqual(avlt.search(3), ['hello', 'world']).should.equal(true);
+      _.isEqual([...avlt.search(3)], ['hello', 'world']).should.equal(true);
 
       avlt.insert(12, 'a');
       avlt.insert(12, 'b');
 
       avlt.checkIsAVLT();
-      _.isEqual(avlt.search(12), ['a', 'b']).should.equal(true);
+      _.isEqual([...avlt.search(12)], ['a', 'b']).should.equal(true);
     });
 
     it('If uniqueness constraint is enforced, we cannot insert different data for same key', function () {
@@ -226,7 +226,7 @@ describe('AVL tree', function () {
       }
 
       avlt.checkIsAVLT();
-      _.isEqual(avlt.search(3), ['hello']).should.equal(true);
+      _.isEqual([...avlt.search(3)], ['hello']).should.equal(true);
 
       avlt.insert(12, 'a');
       try {
@@ -237,7 +237,7 @@ describe('AVL tree', function () {
       }
 
       avlt.checkIsAVLT();
-      _.isEqual(avlt.search(12), ['a']).should.equal(true);
+      _.isEqual([...avlt.search(12)], ['a']).should.equal(true);
     });
 
     it('Can insert 0 or the empty string', function () {
@@ -247,7 +247,7 @@ describe('AVL tree', function () {
 
       avlt.checkIsAVLT();
       avlt.tree.key.should.equal(0);
-      _.isEqual(avlt.tree.data, ['some data']).should.equal(true);
+      _.isEqual(avlt.tree, ['some data']).should.equal(true);
 
       avlt = new AVLTree();
 
@@ -255,7 +255,7 @@ describe('AVL tree', function () {
 
       avlt.checkIsAVLT();
       avlt.tree.key.should.equal('');
-      _.isEqual(avlt.tree.data, ['some other data']).should.equal(true);
+      _.isEqual(avlt.tree, ['some other data']).should.equal(true);
     });
 
     it('Auto-balancing insertions', function () {
@@ -363,7 +363,7 @@ describe('AVL tree', function () {
       avlt.checkIsAVLT();
 
       for (i = 0; i < 100; i += 1) {
-        _.isEqual(avlt.search(i), ['some data for ' + i]).should.equal(true);
+        _.isEqual([...avlt.search(i)], ['some data for ' + i]).should.equal(true);
       }
     });
 
@@ -378,10 +378,10 @@ describe('AVL tree', function () {
 
       avlt.checkIsAVLT();
 
-      avlt.search(-2).length.should.equal(0);
-      avlt.search(100).length.should.equal(0);
-      avlt.search(101).length.should.equal(0);
-      avlt.search(63).length.should.equal(0);
+      [...avlt.search(-2)].length.should.equal(0);
+      [...avlt.search(100)].length.should.equal(0);
+      [...avlt.search(101)].length.should.equal(0);
+      [...avlt.search(63)].length.should.equal(0);
     });
 
     it('Can search for data between two bounds', function () {
@@ -440,8 +440,8 @@ describe('AVL tree', function () {
       avlt.tree.hasOwnProperty('key').should.equal(false);
       avltu.tree.hasOwnProperty('key').should.equal(false);
 
-      avlt.tree.data.length.should.equal(0);
-      avltu.tree.data.length.should.equal(0);
+      avlt.tree.length.should.equal(0);
+      avltu.tree.length.should.equal(0);
 
       avlt.getNumberOfKeys().should.equal(0);
       avltu.getNumberOfKeys().should.equal(0);
@@ -456,7 +456,7 @@ describe('AVL tree', function () {
 
       function checkavlt () {
         [10, 5, 3, 8, 15, 12, 37].forEach(function (k) {
-          _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+          _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
         });
       }
 
@@ -486,12 +486,12 @@ describe('AVL tree', function () {
 
       avlt.insert(10, 'hello');
       avlt.tree.key.should.equal(10);
-      _.isEqual(avlt.tree.data, ['hello']).should.equal(true);
+      _.isEqual(avlt.tree, ['hello']).should.equal(true);
       avlt.getNumberOfKeys().should.equal(1);
 
       avlt.delete(10);
       avlt.tree.hasOwnProperty('key').should.equal(false);
-      avlt.tree.data.length.should.equal(0);
+      avlt.tree.length.should.equal(0);
       avlt.getNumberOfKeys().should.equal(0);
     });
 
@@ -514,9 +514,9 @@ describe('AVL tree', function () {
       function checkRemoved (theRemoved) {
         [10, 5, 3, 8, 15, 12, 37].forEach(function (k) {
           if (theRemoved.indexOf(k) !== -1) {
-            avlt.search(k).length.should.equal(0);
+            [...avlt.search(k)].length.should.equal(0);
           } else {
-            _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+            _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
           }
         });
 
@@ -581,8 +581,8 @@ describe('AVL tree', function () {
       avlt.delete(10);
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(1);
-      _.isEqual(avlt.search(5), ['some 5']).should.equal(true);
-      avlt.search(10).length.should.equal(0);
+      _.isEqual([...avlt.search(5)], ['some 5']).should.equal(true);
+      [...avlt.search(10)].length.should.equal(0);
 
       // Root has only one child, on the right
       avlt = new AVLTree();
@@ -593,8 +593,8 @@ describe('AVL tree', function () {
       avlt.delete(10);
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(1);
-      _.isEqual(avlt.search(15), ['some 15']).should.equal(true);
-      avlt.search(10).length.should.equal(0);
+      _.isEqual([...avlt.search(15)], ['some 15']).should.equal(true);
+      [...avlt.search(10)].length.should.equal(0);
     });
 
     it('Able to delete non root nodes that have only one child', function () {
@@ -607,9 +607,9 @@ describe('AVL tree', function () {
       function checkRemoved (set, theRemoved) {
         set.forEach(function (k) {
           if (theRemoved.indexOf(k) !== -1) {
-            avlt.search(k).length.should.equal(0);
+            [...avlt.search(k)].length.should.equal(0);
           } else {
-            _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+            _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
           }
         });
 
@@ -667,9 +667,9 @@ describe('AVL tree', function () {
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(6);
       [5, 3, 8, 15, 12, 37].forEach(function (k) {
-        _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
       });
-      avlt.search(10).length.should.equal(0);
+      [...avlt.search(10)].length.should.equal(0);
 
       // Rebalancing needed
       avlt = new AVLTree();
@@ -681,9 +681,9 @@ describe('AVL tree', function () {
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(6);
       [5, 8, 15, 12, 37, 42].forEach(function (k) {
-        _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
       });
-      avlt.search(10).length.should.equal(0);
+      [...avlt.search(10)].length.should.equal(0);
     });
 
     it('Can delete a non-root node that has two children', function () {
@@ -699,9 +699,9 @@ describe('AVL tree', function () {
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(15);
       [10, 3, 1, 4, 8, 6, 9, 15, 12, 11, 13, 20, 19, 42, 3.5].forEach(function (k) {
-        _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
       });
-      avlt.search(5).length.should.equal(0);
+      [...avlt.search(5)].length.should.equal(0);
 
       // On the right
       avlt = new AVLTree();
@@ -713,9 +713,9 @@ describe('AVL tree', function () {
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(15);
       [10, 3, 1, 4, 8, 6, 9, 5, 12, 11, 13, 20, 19, 42, 12.5].forEach(function (k) {
-        _.isEqual(avlt.search(k), ['some ' + k]).should.equal(true);
+        _.isEqual([...avlt.search(k)], ['some ' + k]).should.equal(true);
       });
-      avlt.search(15).length.should.equal(0);
+      [...avlt.search(15)].length.should.equal(0);
     });
 
     it('If no value is provided, it will delete the entire node even if there are multiple pieces of data', function () {
@@ -727,12 +727,12 @@ describe('AVL tree', function () {
       avlt.insert(5, 'world');
       avlt.insert(8, 'yes');
 
-      assert.deepEqual(avlt.search(5), ['hello', 'world']);
+      assert.deepEqual([...avlt.search(5)], ['hello', 'world']);
       avlt.getNumberOfKeys().should.equal(4);
 
       avlt.delete(5);
       avlt.checkIsAVLT();
-      avlt.search(5).length.should.equal(0);
+      [...avlt.search(5)].length.should.equal(0);
       avlt.getNumberOfKeys().should.equal(3);
     });
 
@@ -745,12 +745,12 @@ describe('AVL tree', function () {
       avlt.insert(5, 'world');
       avlt.insert(8, 'yes');
 
-      assert.deepEqual(avlt.search(5), ['hello', 'world']);
+      assert.deepEqual([...avlt.search(5)], ['hello', 'world']);
       avlt.getNumberOfKeys().should.equal(4);
 
       avlt.delete(5, 'hello');
       avlt.checkIsAVLT();
-      assert.deepEqual(avlt.search(5), ['world']);
+      assert.deepEqual([...avlt.search(5)], ['world']);
       avlt.getNumberOfKeys().should.equal(4);
     });
 
@@ -763,12 +763,12 @@ describe('AVL tree', function () {
       avlt.insert(5, 'world');
       avlt.insert(8, 'yes');
 
-      assert.deepEqual(avlt.search(5), ['hello', 'world']);
+      assert.deepEqual([...avlt.search(5)], ['hello', 'world']);
       avlt.getNumberOfKeys().should.equal(4);
 
       avlt.delete(5, 'nope');
       avlt.checkIsAVLT();
-      assert.deepEqual(avlt.search(5), ['hello', 'world']);
+      assert.deepEqual([...avlt.search(5)], ['hello', 'world']);
       avlt.getNumberOfKeys().should.equal(4);
     });
 
@@ -781,12 +781,12 @@ describe('AVL tree', function () {
       avlt.insert(5, 'world');
       avlt.insert(8, 'yes3');
 
-      assert.deepEqual(avlt.search(3), ['yes2']);
+      assert.deepEqual([...avlt.search(3)], ['yes2']);
       avlt.getNumberOfKeys().should.equal(4);
 
       avlt.delete(3, 'yes2');
       avlt.checkIsAVLT();
-      avlt.search(3).length.should.equal(0);
+      [...avlt.search(3)].length.should.equal(0);
       avlt.getNumberOfKeys().should.equal(3);
     });
 
@@ -801,8 +801,8 @@ describe('AVL tree', function () {
       avlt.delete(10);
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(2);
-      assert.deepEqual(avlt.search(5), ['no']);
-      assert.deepEqual(avlt.search(15), ['yes']);
+      assert.deepEqual([...avlt.search(5)], ['no']);
+      assert.deepEqual([...avlt.search(15)], ['yes']);
     });
 
     it('Can remove the root from a tree with height 3 when the root has two children (special case where the two children themselves have children)', function () {
@@ -818,8 +818,8 @@ describe('AVL tree', function () {
       avlt.delete(10);
       avlt.checkIsAVLT();
       avlt.getNumberOfKeys().should.equal(4);
-      assert.deepEqual(avlt.search(5), ['no']);
-      assert.deepEqual(avlt.search(15), ['yes']);
+      assert.deepEqual([...avlt.search(5)], ['no']);
+      assert.deepEqual([...avlt.search(15)], ['yes']);
     });
 
     it("Removing falsy values does not delete the entire key", function () {
@@ -827,16 +827,16 @@ describe('AVL tree', function () {
 
       avlt.insert(10, 2);
       avlt.insert(10, 1);
-      assert.deepEqual(avlt.search(10), [2, 1]);
+      assert.deepEqual([...avlt.search(10)], [2, 1]);
 
       avlt.delete(10, 2);
-      assert.deepEqual(avlt.search(10), [1]);
+      assert.deepEqual([...avlt.search(10)], [1]);
 
       avlt.insert(10, 0);
-      assert.deepEqual(avlt.search(10), [1, 0]);
+      assert.deepEqual([...avlt.search(10)], [1, 0]);
 
       avlt.delete(10, 0);
-      assert.deepEqual(avlt.search(10), [1]);
+      assert.deepEqual([...avlt.search(10)], [1]);
     });
 
   });   // ==== End of 'Deletion' ==== //
@@ -858,55 +858,55 @@ describe('AVL tree', function () {
     avlt.insert(2, undefined);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(undefined), []);
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], []);
 
     avlt.insert(undefined, 'hello');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(undefined), ['hello']);
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], ['hello']);
 
     avlt.insert(undefined, 'world');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(undefined), ['hello', 'world']);
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], ['hello', 'world']);
 
     avlt.insert(4, undefined);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(4), [undefined]);
-    assert.deepEqual(avlt.search(undefined), ['hello', 'world']);
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(4)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], ['hello', 'world']);
 
     avlt.delete(undefined, 'hello');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(4), [undefined]);
-    assert.deepEqual(avlt.search(undefined), ['world']);
-
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(4)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], ['world']);
+    
     avlt.delete(undefined);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [undefined]);
-    assert.deepEqual(avlt.search(4), [undefined]);
-    assert.deepEqual(avlt.search(undefined), []);
+    assert.deepEqual([...avlt.search(2)], [undefined]);
+    assert.deepEqual([...avlt.search(4)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], []);
 
     avlt.delete(2, undefined);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(avlt.search(2), []);
-    assert.deepEqual(avlt.search(4), [undefined]);
-    assert.deepEqual(avlt.search(undefined), []);
+    assert.deepEqual([...avlt.search(2)], []);
+    assert.deepEqual([...avlt.search(4)], [undefined]);
+    assert.deepEqual([...avlt.search(undefined)], []);
 
     avlt.delete(4);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(0);
-    assert.deepEqual(avlt.search(2), []);
-    assert.deepEqual(avlt.search(4), []);
-    assert.deepEqual(avlt.search(undefined), []);
+    assert.deepEqual([...avlt.search(2)], []);
+    assert.deepEqual([...avlt.search(4)], []);
+    assert.deepEqual([...avlt.search(undefined)], []);
   });
 
 
@@ -926,55 +926,55 @@ describe('AVL tree', function () {
     avlt.insert(2, null);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(null), []);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(null)], []);
 
     avlt.insert(null, 'hello');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(null), ['hello']);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(null)], ['hello']);
 
     avlt.insert(null, 'world');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(null), ['hello', 'world']);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(null)], ['hello', 'world']);
 
     avlt.insert(4, null);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(4), [null]);
-    assert.deepEqual(avlt.search(null), ['hello', 'world']);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(4)], [null]);
+    assert.deepEqual([...avlt.search(null)], ['hello', 'world']);
 
     avlt.delete(null, 'hello');
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(3);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(4), [null]);
-    assert.deepEqual(avlt.search(null), ['world']);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(4)], [null]);
+    assert.deepEqual([...avlt.search(null)], ['world']);
 
     avlt.delete(null);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(2);
-    assert.deepEqual(avlt.search(2), [null]);
-    assert.deepEqual(avlt.search(4), [null]);
-    assert.deepEqual(avlt.search(null), []);
+    assert.deepEqual([...avlt.search(2)], [null]);
+    assert.deepEqual([...avlt.search(4)], [null]);
+    assert.deepEqual([...avlt.search(null)], []);
 
     avlt.delete(2, null);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(1);
-    assert.deepEqual(avlt.search(2), []);
-    assert.deepEqual(avlt.search(4), [null]);
-    assert.deepEqual(avlt.search(null), []);
+    assert.deepEqual([...avlt.search(2)], []);
+    assert.deepEqual([...avlt.search(4)], [null]);
+    assert.deepEqual([...avlt.search(null)], []);
 
     avlt.delete(4);
     avlt.checkIsAVLT();
     avlt.getNumberOfKeys().should.equal(0);
-    assert.deepEqual(avlt.search(2), []);
-    assert.deepEqual(avlt.search(4), []);
-    assert.deepEqual(avlt.search(null), []);
+    assert.deepEqual([...avlt.search(2)], []);
+    assert.deepEqual([...avlt.search(4)], []);
+    assert.deepEqual([...avlt.search(null)], []);
   });
 
 
@@ -1022,8 +1022,8 @@ describe('AVL tree', function () {
       // avltDataElems is a simple array containing every piece of data in the tree
       avlt.executeOnEveryNode(function (node) {
         var i;
-        for (i = 0; i < node.data.length; i += 1) {
-          avltDataElems.push(node.data[i]);
+        for (i = 0; i < node.length; i += 1) {
+          avltDataElems.push(node[i]);
         }
       });
 
@@ -1033,7 +1033,7 @@ describe('AVL tree', function () {
 
       // Compare data
       Object.keys(data).forEach(function (key) {
-        checkDataEquality(avlt.search(key), data[key]);
+        checkDataEquality([...avlt.search(key)], data[key]);
       });
     }
 
