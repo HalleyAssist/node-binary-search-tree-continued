@@ -21,6 +21,7 @@ Values inserted can be anything except `undefined`.
 
 ```javascript
 var BinarySearchTree = require('binary-search-tree-continued').BinarySearchTree
+  , AVLTree = require('binary-search-tree-continued').AVLTree   // Same API as BinarySearchTree
 
 // Creating a binary search tree
 var bst = new BinarySearchTree();
