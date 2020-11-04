@@ -11,16 +11,16 @@ describe('AVL tree', function () {
   describe('Sanity checks', function () {
 
     it('Checking that all nodes heights are correct', function () {
-      var _AVLTree = AVLTree._AVLTree
-        , avlt = new _AVLTree({ key: 10 })
-        , l = new _AVLTree({ key: 5 })
-        , r = new _AVLTree({ key: 15 })
-        , ll = new _AVLTree({ key: 3 })
-        , lr = new _AVLTree({ key: 8 })
-        , rl = new _AVLTree({ key: 13 })
-        , rr = new _AVLTree({ key: 18 })
-        , lrl = new _AVLTree({ key: 7 })
-        , lrll = new _AVLTree({ key: 6 })
+      var AVLTreeNode = AVLTree.AVLTreeNode
+        , avlt = new AVLTreeNode({ key: 10 })
+        , l = new AVLTreeNode({ key: 5 })
+        , r = new AVLTreeNode({ key: 15 })
+        , ll = new AVLTreeNode({ key: 3 })
+        , lr = new AVLTreeNode({ key: 8 })
+        , rl = new AVLTreeNode({ key: 13 })
+        , rr = new AVLTreeNode({ key: 18 })
+        , lrl = new AVLTreeNode({ key: 7 })
+        , lrll = new AVLTreeNode({ key: 6 })
         ;
 
 
@@ -76,16 +76,16 @@ describe('AVL tree', function () {
     });
 
     it('Calculate the balance factor', function () {
-      var _AVLTree = AVLTree._AVLTree
-        , avlt = new _AVLTree({ key: 10 })
-        , l = new _AVLTree({ key: 5 })
-        , r = new _AVLTree({ key: 15 })
-        , ll = new _AVLTree({ key: 3 })
-        , lr = new _AVLTree({ key: 8 })
-        , rl = new _AVLTree({ key: 13 })
-        , rr = new _AVLTree({ key: 18 })
-        , lrl = new _AVLTree({ key: 7 })
-        , lrll = new _AVLTree({ key: 6 })
+      var AVLTreeNode = AVLTree.AVLTreeNode
+        , avlt = new AVLTreeNode({ key: 10 })
+        , l = new AVLTreeNode({ key: 5 })
+        , r = new AVLTreeNode({ key: 15 })
+        , ll = new AVLTreeNode({ key: 3 })
+        , lr = new AVLTreeNode({ key: 8 })
+        , rl = new AVLTreeNode({ key: 13 })
+        , rr = new AVLTreeNode({ key: 18 })
+        , lrl = new AVLTreeNode({ key: 7 })
+        , lrll = new AVLTreeNode({ key: 6 })
         ;
 
 
@@ -124,14 +124,14 @@ describe('AVL tree', function () {
     });
 
     it('Can check that a tree is balanced', function () {
-      var _AVLTree = AVLTree._AVLTree
-        , avlt = new _AVLTree({ key: 10 })
-        , l = new _AVLTree({ key: 5 })
-        , r = new _AVLTree({ key: 15 })
-        , ll = new _AVLTree({ key: 3 })
-        , lr = new _AVLTree({ key: 8 })
-        , rl = new _AVLTree({ key: 13 })
-        , rr = new _AVLTree({ key: 18 })
+      var AVLTreeNode = AVLTree.AVLTreeNode
+        , avlt = new AVLTreeNode({ key: 10 })
+        , l = new AVLTreeNode({ key: 5 })
+        , r = new AVLTreeNode({ key: 15 })
+        , ll = new AVLTreeNode({ key: 3 })
+        , lr = new AVLTreeNode({ key: 8 })
+        , rl = new AVLTreeNode({ key: 13 })
+        , rr = new AVLTreeNode({ key: 18 })
 
       avlt.left = l;
       avlt.right = r;
@@ -227,7 +227,7 @@ describe('AVL tree', function () {
 
       avlt.checkIsAVLT();
       _.isEqual([...avlt.search(3)], ['hello']).should.equal(true);
-
+      
       avlt.insert(12, 'a');
       try {
         avlt.insert(12, 'world');
